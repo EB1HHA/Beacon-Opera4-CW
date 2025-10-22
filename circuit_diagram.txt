@@ -1,0 +1,73 @@
+CIRCUIT DIAGRAM - Beacon Opera4 and CW
+======================================
+
+Hardware Connection Diagram:
+----------------------------
+
+                    +---------------+
+                    |    Si5351     |
+                    |   Oscillator  |
+                    +---------------+
+                    |               |
+    3.3V -----------| VCC           |
+                    |               |
+    GND  -----------| GND           |
+                    |               |
+    GPIO0 ----------| SDA  (I2C)    |
+                    |               |
+    GPIO2 ----------| SCL  (I2C)    |
+                    |               |
+                    | CLK0 |--------+---> RF Output (to amplifier/filter)
+                    | CLK1 |
+                    | CLK2 |
+                    +---------------+
+
+
+ESP01 Pinout:
+-------------
+        +------------+
+        |   ESP01    |
+        +------------+
+    TX  | 1      8 | VCC (3.3V)
+    RX  | 2      7 | GND
+  GPIO0 | 3      6 | RST
+  GPIO2 | 4      5 | CH_PD (3.3V)
+        +------------+
+
+Connections:
+- Pin 3 (GPIO0) -> Si5351 SDA
+- Pin 4 (GPIO2) -> Si5351 SCL
+- Pin 8 (VCC)   -> Si5351 VCC
+- Pin 7 (GND)   -> Si5351 GND
+- Pin 5 (CH_PD) -> 3.3V (enable chip)
+
+
+Optional Amplifier Stage:
+-------------------------
+
+Si5351 CLK0 Output -> Low Pass Filter -> RF Amplifier -> Antenna
+
+Recommended filters by band:
+- 40m (7 MHz): 7-pole Chebyshev LPF
+- 30m (10 MHz): 7-pole Chebyshev LPF
+- 20m (14 MHz): 7-pole Chebyshev LPF
+
+The amplifier stage can be a simple class A or class AB amplifier
+using transistors like 2N3904, 2N2222, or similar.
+
+
+Power Supply:
+-------------
+- Input: 5V DC
+- Regulated to 3.3V using LM1117-3.3 or similar
+- Add 100nF and 10µF capacitors for decoupling
+
+
+Notes:
+------
+1. Si5351 can output on 3 independent clock outputs (CLK0, CLK1, CLK2)
+2. This design uses CLK0 for the beacon signal
+3. Use proper RF shielding to avoid interference
+4. Ground plane is recommended for stable operation
+5. Keep I2C lines as short as possible
+6. Add 4.7kΩ pull-up resistors on SDA and SCL if needed
