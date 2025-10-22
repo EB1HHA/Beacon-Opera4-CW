@@ -1,0 +1,42 @@
+# Build artifacts
+*.o
+*.elf
+*.hex
+*.bin
+*.eep
+*.lss
+*.map
+
+# PlatformIO
+.pio
+.pioenvs
+.piolibdeps
+.vscode
+.clang_complete
+.gcc-flags.json
+
+# Arduino
+build/
+*.d
+
+# IDE
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# System files
+Thumbs.db
+desktop.ini
